@@ -1,16 +1,16 @@
 import socket
 def main():
 	host = '10.10.9.59'
-	port = 5095
+	port = 5170
+	server = ('10.10.9.59', 5095)
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	s.bind((host, port))
-	while True:
+	message = input('--')
+	while message != 'x':
+		s.sendto(message.encode(), server)
 		data, addr = s.recvfrom(1024)
-		print('message from: ' + str(addr))
-		print('from user: ' + data.decode())
-		data = str(data.decode()).upper()
-		print('sending: ' + data)
-		s.sendto(data.encode(), addr)
+		print('from server: ' + data.decode())
+		message = input('--')
 	s.close()
 if __name__ == '__main__':
 	main()
